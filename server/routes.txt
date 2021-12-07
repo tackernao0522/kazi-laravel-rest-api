@@ -1,6 +1,8 @@
-+--------+----------+-----------+------+-------------------------------------------------+------------+
-| Domain | Method   | URI       | Name | Action                                          | Middleware |
-+--------+----------+-----------+------+-------------------------------------------------+------------+
-|        | GET|HEAD | /         |      | Closure                                         | web        |
-|        | GET|HEAD | api/class |      | App\Http\Controllers\Api\SclassController@index | api        |
-+--------+----------+-----------+------+-------------------------------------------------+------------+
++--------+----------+---------------------+------+-------------------------------------------------+------------+
+| Domain | Method   | URI                 | Name | Action                                          | Middleware |
++--------+----------+---------------------+------+-------------------------------------------------+------------+
+|        | GET|HEAD | /                   |      | Closure                                         | web        |
+|        | GET|HEAD | api/class           |      | App\Http\Controllers\Api\SclassController@index | api        |
+|        | GET|HEAD | api/class/edit/{id} |      | App\Http\Controllers\Api\SclassController@edit  | api        |
+|        | POST     | api/class/store     |      | App\Http\Controllers\Api\SclassController@store | api        |
++--------+----------+---------------------+------+-------------------------------------------------+------------+

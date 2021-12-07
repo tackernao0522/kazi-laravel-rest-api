@@ -9,3 +9,5 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/class', [SclassController::class, 'index']);
+Route::post('/class/store', [SclassController::class, 'store']);
+Route::get('/class/edit/{id}', [SclassController::class, 'edit']);

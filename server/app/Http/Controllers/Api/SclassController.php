@@ -14,4 +14,24 @@ class SclassController extends Controller
 
         return response()->json($sclass);
     }
+
+    public function store(Request $request)
+    {
+        $validateData = $request->validate([
+            'class_name' => 'required|unique:sclasses|max:25',
+        ]);
+
+        Sclass::insert([
+            'class_name' => $request->class_name,
+        ]);
+
+        return response('Student Class Inserted Successfully');
+    }
+
+    public function edit($id)
+    {
+        $sclass = Sclass::findOrFail($id);
+
+        return response()->json($sclass);
+    }
 }
