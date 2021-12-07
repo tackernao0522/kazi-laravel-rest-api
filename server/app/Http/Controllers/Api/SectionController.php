@@ -38,4 +38,21 @@ class SectionController extends Controller
 
         return response()->json($section);
     }
+
+    public function sectionUpdate(Request $request, $id)
+    {
+        Section::findOrFail($id)->update([
+            'class_id' => $request->class_id,
+            'section_name' => $request->section_name,
+        ]);
+
+        return response('Student Section Updated Successfully');
+    }
+
+    public function sectionDelete($id)
+    {
+        Section::findOrFail($id)->delete();
+
+        return response('Student Section Deleted Successfully');
+    }
 }

@@ -330,3 +330,200 @@ class SectionController extends Controller
 }
 ```
 
+## 213 RestAPI Section CRUD Part2
+
++ `routes/api.php`を編集<br>
+
+```
+<?php
+
+use App\Http\Controllers\Api\SclassController;
+use App\Http\Controllers\Api\SectionController;
+use App\Http\Controllers\Api\SubjectController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+// Student Class Routes
+Route::get('/class', [SclassController::class, 'index']);
+Route::post('/class/store', [SclassController::class, 'store']);
+Route::get('/class/edit/{id}', [SclassController::class, 'edit']);
+Route::post('/class/update/{id}', [SclassController::class, 'update']);
+Route::get('/class/delete/{id}', [SclassController::class, 'delete']);
+
+// Subject Class Routes
+Route::get('/subject', [SubjectController::class, 'sectionIndex']);
+Route::post('/subject/store', [SubjectController::class, 'store']);
+Route::get('/subject/edit/{id}', [SubjectController::class, 'subEdit']);
+Route::post('/subject/update/{id}', [SubjectController::class, 'update']);
+Route::get('/subject/delete/{id}', [SubjectController::class, 'delete']);
+
+// Section Routes
+Route::get('/section', [SectionController::class, 'sectionIndex']);
+Route::post('/section/store', [SectionController::class, 'store']);
+Route::get('/section/edit/{id}', [SectionController::class, 'sectionEdit']);
+Route::post('/section/update/{id}', [SectionController::class, 'sectionUpdate']);
+```
+
++ `SectionController.php`を編集<br>
+
+```
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Models\Section;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+
+class SectionController extends Controller
+{
+    public function sectionIndex()
+    {
+        $sections = Section::latest()->get();
+
+        return response()->json($sections);
+    }
+
+    public function store(Request $request)
+    {
+        $validateData = $request->validate([
+            'class_id' => 'required',
+            'section_name' => 'required|unique:sections|max:25'
+        ]);
+
+        Section::insert([
+            'class_id' => $request->class_id,
+            'section_name' => $request->section_name,
+            'created_at' => Carbon::now(),
+        ]);
+
+        return response('Student Section Inserted Successfully');
+    }
+
+    public function sectionEdit($id)
+    {
+        $section = Section::findOrFail($id);
+
+        return response()->json($section);
+    }
+
+    public function sectionUpdate(Request $request, $id)
+    {
+        Section::findOrFail($id)->update([
+            'class_id' => $request->class_id,
+            'section_name' => $request->section_name,
+        ]);
+
+        return response('Student Section Updated Successfully');
+    }
+}
+```
+
++ `Postman(POST) localhost/api/section/update/2`を入力して更新してみる<br>
+
++ `routes/api.php`を編集<br>
+
+```
+<?php
+
+use App\Http\Controllers\Api\SclassController;
+use App\Http\Controllers\Api\SectionController;
+use App\Http\Controllers\Api\SubjectController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+// Student Class Routes
+Route::get('/class', [SclassController::class, 'index']);
+Route::post('/class/store', [SclassController::class, 'store']);
+Route::get('/class/edit/{id}', [SclassController::class, 'edit']);
+Route::post('/class/update/{id}', [SclassController::class, 'update']);
+Route::get('/class/delete/{id}', [SclassController::class, 'delete']);
+
+// Subject Class Routes
+Route::get('/subject', [SubjectController::class, 'sectionIndex']);
+Route::post('/subject/store', [SubjectController::class, 'store']);
+Route::get('/subject/edit/{id}', [SubjectController::class, 'subEdit']);
+Route::post('/subject/update/{id}', [SubjectController::class, 'update']);
+Route::get('/subject/delete/{id}', [SubjectController::class, 'delete']);
+
+// Section Routes
+Route::get('/section', [SectionController::class, 'sectionIndex']);
+Route::post('/section/store', [SectionController::class, 'store']);
+Route::get('/section/edit/{id}', [SectionController::class, 'sectionEdit']);
+Route::post('/section/update/{id}', [SectionController::class, 'sectionUpdate']);
+Route::get('/section/delete/{id}', [SectionController::class, 'sectionDelete']);
+```
+
++ `SecitonController.php`を編集<br>
+
+```
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Models\Section;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+
+class SectionController extends Controller
+{
+    public function sectionIndex()
+    {
+        $sections = Section::latest()->get();
+
+        return response()->json($sections);
+    }
+
+    public function store(Request $request)
+    {
+        $validateData = $request->validate([
+            'class_id' => 'required',
+            'section_name' => 'required|unique:sections|max:25'
+        ]);
+
+        Section::insert([
+            'class_id' => $request->class_id,
+            'section_name' => $request->section_name,
+            'created_at' => Carbon::now(),
+        ]);
+
+        return response('Student Section Inserted Successfully');
+    }
+
+    public function sectionEdit($id)
+    {
+        $section = Section::findOrFail($id);
+
+        return response()->json($section);
+    }
+
+    public function sectionUpdate(Request $request, $id)
+    {
+        Section::findOrFail($id)->update([
+            'class_id' => $request->class_id,
+            'section_name' => $request->section_name,
+        ]);
+
+        return response('Student Section Updated Successfully');
+    }
+
+    public function sectionDelete($id)
+    {
+        Section::findOrFail($id)->delete();
+
+        return response('Student Section Deleted Successfully');
+    }
+}
+```
+
+`Postman(GET) localhost/api/seciton/delete/4`を入力して削除してみる<br>
