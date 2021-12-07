@@ -62,7 +62,7 @@ class Section extends Model
 
 + `$ php artisan make:controller Api/SectionController`を実行<br>
 
-+ `web.php`を編集<br>
++ `reoutes/api.php`を編集<br>
 
 ```
 <?php

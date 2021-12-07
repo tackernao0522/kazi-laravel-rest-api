@@ -12,6 +12,8 @@
 |        | GET|HEAD | api/section/edit/{id}   |      | App\Http\Controllers\Api\SectionController@sectionEdit   | api        |
 |        | POST     | api/section/store       |      | App\Http\Controllers\Api\SectionController@store         | api        |
 |        | POST     | api/section/update/{id} |      | App\Http\Controllers\Api\SectionController@sectionUpdate | api        |
+|        | GET|HEAD | api/student             |      | App\Http\Controllers\Api\StudentController@studentIndex  | api        |
+|        | POST     | api/student/store       |      | App\Http\Controllers\Api\StudentController@studentStore  | api        |
 |        | GET|HEAD | api/subject             |      | App\Http\Controllers\Api\SubjectController@sectionIndex  | api        |
 |        | GET|HEAD | api/subject/delete/{id} |      | App\Http\Controllers\Api\SubjectController@delete        | api        |
 |        | GET|HEAD | api/subject/edit/{id}   |      | App\Http\Controllers\Api\SubjectController@subEdit       | api        |
