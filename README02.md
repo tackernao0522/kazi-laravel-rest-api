@@ -87,7 +87,7 @@ Route::get('/class/delete/{id}', [SclassController::class, 'delete']);
 // Subject Class Routes
 Route::get('/subject', [SubjectController::class, 'index']);
 Route::post('/subject/store', [SubjectController::class, 'store']);
-Route::get('/subject/edit/{id}', [SubjectController::class, 'edit']);
+Route::get('/subject/edit/{id}', [SubjectController::class, 'subEdit']);
 Route::post('/subject/update/{id}', [SubjectController::class, 'update']);
 Route::get('/subject/delete/{id}', [SubjectController::class, 'delete']);
 ```
@@ -219,4 +219,198 @@ class SubjectController extends Controller
     }
 ]
 ```
+
+## 211 RestAPI Subject CRUD Part2
+
++ `SubjectController.php`を編集<br>
+
+```
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Models\Subject;
+use Illuminate\Http\Request;
+
+class SubjectController extends Controller
+{
+    public function index()
+    {
+        $subjects = Subject::latest()->get();
+
+        return response()->json($subjects);
+    }
+
+    public function store(Request $request)
+    {
+        $validateData = $request->validate([
+            'class_id' => 'required',
+            'subject_name' => 'required|unique:subjects|max:25',
+        ]);
+
+        Subject::insert([
+            'class_id' => $request->class_id,
+            'subject_name' => $request->subject_name,
+            'subject_code' => $request->subject_code,
+        ]);
+
+        return response('Student Subject Inserted Successfully');
+    }
+
+    public function subEdit($id)
+    {
+        $subject = Subject::findOrFail($id);
+
+        return response()->json($subject);
+    }
+}
+```
+
++ `Postmanに localhost/api/subject/edit/3`を入力(GET)<br>
+
++ `Sendをクリック`<br>
+
+```
+{
+    "id": 3,
+    "class_id": 3,
+    "subject_name": "Math",
+    "subject_code": "103",
+    "created_at": null,
+    "updated_at": null
+}
+```
+
++ `SubjectController.php`を編集<br>
+
+```
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Models\Subject;
+use Illuminate\Http\Request;
+
+class SubjectController extends Controller
+{
+    public function index()
+    {
+        $subjects = Subject::latest()->get();
+
+        return response()->json($subjects);
+    }
+
+    public function store(Request $request)
+    {
+        $validateData = $request->validate([
+            'class_id' => 'required',
+            'subject_name' => 'required|unique:subjects|max:25',
+        ]);
+
+        Subject::insert([
+            'class_id' => $request->class_id,
+            'subject_name' => $request->subject_name,
+            'subject_code' => $request->subject_code,
+        ]);
+
+        return response('Student Subject Inserted Successfully');
+    }
+
+    public function subEdit($id)
+    {
+        $subject = Subject::findOrFail($id);
+
+        return response()->json($subject);
+    }
+
+    public function update(Request $request, $id)
+    {
+        Subject::findOrFail($id)->update([
+            'class_id' => $request->class_id,
+            'subject_name' => $request->subject_name,
+            'subject_code' => $request->subject_code,
+        ]);
+
+        return response('Student Subject Updated Successfully');
+    }
+}
+```
+
++ `Postmanで localhost/api/subject/update/3`を入力(POST)<br>
+
++ `subject_nameだけ変更してみる VALUEをMath New`と変更<br>
+
++ `Sendをクリック`<br>
+
++ `DBが変更される`<br>
+
++ `SubjectController.php`を編集<br>
+
+```
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Models\Subject;
+use Illuminate\Http\Request;
+
+class SubjectController extends Controller
+{
+    public function index()
+    {
+        $subjects = Subject::latest()->get();
+
+        return response()->json($subjects);
+    }
+
+    public function store(Request $request)
+    {
+        $validateData = $request->validate([
+            'class_id' => 'required',
+            'subject_name' => 'required|unique:subjects|max:25',
+        ]);
+
+        Subject::insert([
+            'class_id' => $request->class_id,
+            'subject_name' => $request->subject_name,
+            'subject_code' => $request->subject_code,
+        ]);
+
+        return response('Student Subject Inserted Successfully');
+    }
+
+    public function subEdit($id)
+    {
+        $subject = Subject::findOrFail($id);
+
+        return response()->json($subject);
+    }
+
+    public function update(Request $request, $id)
+    {
+        Subject::findOrFail($id)->update([
+            'class_id' => $request->class_id,
+            'subject_name' => $request->subject_name,
+            'subject_code' => $request->subject_code,
+        ]);
+
+        return response('Student Subject Updated Successfully');
+    }
+
+    public function delete($id)
+    {
+        Subject::findOrFail($id)->delete();
+
+        return response('Student Subject Deleted Successfully');
+    }
+}
+```
+
++ `Postmanで localhost/api/subject/delete/3`を実行してみる(GET)<br>
+
++ `削除されていればOK`<br>
+
 

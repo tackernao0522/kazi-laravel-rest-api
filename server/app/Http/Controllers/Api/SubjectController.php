@@ -30,4 +30,29 @@ class SubjectController extends Controller
 
         return response('Student Subject Inserted Successfully');
     }
+
+    public function subEdit($id)
+    {
+        $subject = Subject::findOrFail($id);
+
+        return response()->json($subject);
+    }
+
+    public function update(Request $request, $id)
+    {
+        Subject::findOrFail($id)->update([
+            'class_id' => $request->class_id,
+            'subject_name' => $request->subject_name,
+            'subject_code' => $request->subject_code,
+        ]);
+
+        return response('Student Subject Updated Successfully');
+    }
+
+    public function delete($id)
+    {
+        Subject::findOrFail($id)->delete();
+
+        return response('Student Subject Deleted Successfully');
+    }
 }
