@@ -28,3 +28,5 @@ Route::get('/subject/delete/{id}', [SubjectController::class, 'delete']);
 Route::get('/section', [SectionController::class, 'sectionIndex']);
 Route::post('/section/store', [SectionController::class, 'store']);
 Route::get('/section/edit/{id}', [SectionController::class, 'sectionEdit']);
+Route::post('/section/update/{id}', [SectionController::class, 'sectionUpdate']);
+Route::get('/section/delete/{id}', [SectionController::class, 'sectionDelete']);
