@@ -316,3 +316,181 @@ class SclassController extends Controller
     "updated_at": null
 }
 ```
+
+## 209 RestAPI Class CRUD Part2
+
++ `routes/api.php`を編集<br>
+
+```
+<?php
+
+use App\Http\Controllers\Api\SclassController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::get('/class', [SclassController::class, 'index']);
+Route::post('/class/store', [SclassController::class, 'store']);
+Route::get('/class/edit/{id}', [SclassController::class, 'edit']);
+Route::post('/class/update/{id}', [SclassController::class, 'update']);
+```
+
++ `SclassController.php`を編集<br>
+
+```
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Models\Sclass;
+use Illuminate\Http\Request;
+
+class SclassController extends Controller
+{
+    public function index()
+    {
+        $sclass = Sclass::latest()->get();
+
+        return response()->json($sclass);
+    }
+
+    public function store(Request $request)
+    {
+        $validateData = $request->validate([
+            'class_name' => 'required|unique:sclasses|max:25',
+        ]);
+
+        Sclass::insert([
+            'class_name' => $request->class_name,
+        ]);
+
+        return response('Student Class Inserted Successfully');
+    }
+
+    public function edit($id)
+    {
+        $sclass = Sclass::findOrFail($id);
+
+        return response()->json($sclass);
+    }
+
+    public function update(Request $request, $id)
+    {
+        Sclass::findOrFail($id)->update([
+            'class_name' => $request->class_name,
+        ]);
+
+        return response('Student Class Updated Successfully');
+    }
+}
+```
+
++ `Postmanで localhost/api/class/update/2`と入力(POST)<br>
+
++ `headersを選択`<br>
+
++ `KEYに Accept と入力`<br>
+
++ `VALUEに application/joson と入力`<br>
+
++ `KEYに Content-type と追加入力`<br>
+
++ `VALUEに application/json と追加入力`<br>
+
++ `Body`を選択<br>
+
++ `x-www-form-urlencoded`を選択<br>
+
++ `KEYにclass_name を入力`<br>
+
++ `VALUEに Class Two New を入力してみる`<br>
+
++ `Send`をクリック<br>
+
++ `更新される`<br>
+
++ `routes/api.php`を編集<br>
+
+```
+<?php
+
+use App\Http\Controllers\Api\SclassController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::get('/class', [SclassController::class, 'index']);
+Route::post('/class/store', [SclassController::class, 'store']);
+Route::get('/class/edit/{id}', [SclassController::class, 'edit']);
+Route::post('/class/update/{id}', [SclassController::class, 'update']);
+Route::get('/class/delete/{id}', [SclassController::class, 'delete']);
+```
+
++ `SclassController.php`を編集<br>
+
+```
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Models\Sclass;
+use Illuminate\Http\Request;
+
+class SclassController extends Controller
+{
+    public function index()
+    {
+        $sclass = Sclass::latest()->get();
+
+        return response()->json($sclass);
+    }
+
+    public function store(Request $request)
+    {
+        $validateData = $request->validate([
+            'class_name' => 'required|unique:sclasses|max:25',
+        ]);
+
+        Sclass::insert([
+            'class_name' => $request->class_name,
+        ]);
+
+        return response('Student Class Inserted Successfully');
+    }
+
+    public function edit($id)
+    {
+        $sclass = Sclass::findOrFail($id);
+
+        return response()->json($sclass);
+    }
+
+    public function update(Request $request, $id)
+    {
+        Sclass::findOrFail($id)->update([
+            'class_name' => $request->class_name,
+        ]);
+
+        return response('Student Class Updated Successfully');
+    }
+
+    public function delete($id)
+    {
+        Sclass::findOrFail($id)->delete();
+
+        return response('Student Class Deleted Successfully');
+    }
+}
+```
+
++ `Postmanに localhost/api/class/delete/2`を入力してSendをクリック<br>
+
++ `対象IDが削除される`<br>

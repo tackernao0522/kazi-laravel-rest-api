@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
+// Student Class Routes
 Route::get('/class', [SclassController::class, 'index']);
 Route::post('/class/store', [SclassController::class, 'store']);
 Route::get('/class/edit/{id}', [SclassController::class, 'edit']);
+Route::post('/class/update/{id}', [SclassController::class, 'update']);
+Route::get('/class/delete/{id}', [SclassController::class, 'delete']);
