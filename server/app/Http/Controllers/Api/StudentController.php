@@ -39,4 +39,35 @@ class StudentController extends Controller
 
         return response('Student Inserted Successfully');
     }
+
+    public function studentEdit($id)
+    {
+        $student = Student::findOrFail($id);
+
+        return response()->json($student);
+    }
+
+    public function studentUpdate(Request $request, $id)
+    {
+        Student::findOrFail($id)->update([
+            'class_id' => $request->class_id,
+            'section_id' => $request->section_id,
+            'name' => $request->name,
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'photo' => $request->photo,
+            'gender' => $request->gender,
+        ]);
+
+        return response('Student Updated Successfully');
+    }
+
+    public function studentDelete($id)
+    {
+        Student::findOrFail($id)->delete();
+
+        return response('Student Deleted Successfully');
+    }
 }
