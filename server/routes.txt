@@ -1,15 +1,18 @@
-+--------+----------+-------------------------+------+----------------------------------------------------+------------+
-| Domain | Method   | URI                     | Name | Action                                             | Middleware |
-+--------+----------+-------------------------+------+----------------------------------------------------+------------+
-|        | GET|HEAD | /                       |      | Closure                                            | web        |
-|        | GET|HEAD | api/class               |      | App\Http\Controllers\Api\SclassController@index    | api        |
-|        | GET|HEAD | api/class/delete/{id}   |      | App\Http\Controllers\Api\SclassController@delete   | api        |
-|        | GET|HEAD | api/class/edit/{id}     |      | App\Http\Controllers\Api\SclassController@edit     | api        |
-|        | POST     | api/class/store         |      | App\Http\Controllers\Api\SclassController@store    | api        |
-|        | POST     | api/class/update/{id}   |      | App\Http\Controllers\Api\SclassController@update   | api        |
-|        | GET|HEAD | api/subject             |      | App\Http\Controllers\Api\SubjectController@index   | api        |
-|        | GET|HEAD | api/subject/delete/{id} |      | App\Http\Controllers\Api\SubjectController@delete  | api        |
-|        | GET|HEAD | api/subject/edit/{id}   |      | App\Http\Controllers\Api\SubjectController@subEdit | api        |
-|        | POST     | api/subject/store       |      | App\Http\Controllers\Api\SubjectController@store   | api        |
-|        | POST     | api/subject/update/{id} |      | App\Http\Controllers\Api\SubjectController@update  | api        |
-+--------+----------+-------------------------+------+----------------------------------------------------+------------+
++--------+----------+-------------------------+------+---------------------------------------------------------+------------+
+| Domain | Method   | URI                     | Name | Action                                                  | Middleware |
++--------+----------+-------------------------+------+---------------------------------------------------------+------------+
+|        | GET|HEAD | /                       |      | Closure                                                 | web        |
+|        | GET|HEAD | api/class               |      | App\Http\Controllers\Api\SclassController@index         | api        |
+|        | GET|HEAD | api/class/delete/{id}   |      | App\Http\Controllers\Api\SclassController@delete        | api        |
+|        | GET|HEAD | api/class/edit/{id}     |      | App\Http\Controllers\Api\SclassController@edit          | api        |
+|        | POST     | api/class/store         |      | App\Http\Controllers\Api\SclassController@store         | api        |
+|        | POST     | api/class/update/{id}   |      | App\Http\Controllers\Api\SclassController@update        | api        |
+|        | GET|HEAD | api/section             |      | App\Http\Controllers\Api\SectionController@sectionIndex | api        |
+|        | GET|HEAD | api/section/edit/{id}   |      | App\Http\Controllers\Api\SectionController@sectionEdit  | api        |
+|        | POST     | api/section/store       |      | App\Http\Controllers\Api\SectionController@store        | api        |
+|        | GET|HEAD | api/subject             |      | App\Http\Controllers\Api\SubjectController@sectionIndex | api        |
+|        | GET|HEAD | api/subject/delete/{id} |      | App\Http\Controllers\Api\SubjectController@delete       | api        |
+|        | GET|HEAD | api/subject/edit/{id}   |      | App\Http\Controllers\Api\SubjectController@subEdit      | api        |
+|        | POST     | api/subject/store       |      | App\Http\Controllers\Api\SubjectController@store        | api        |
+|        | POST     | api/subject/update/{id} |      | App\Http\Controllers\Api\SubjectController@update       | api        |
++--------+----------+-------------------------+------+---------------------------------------------------------+------------+
